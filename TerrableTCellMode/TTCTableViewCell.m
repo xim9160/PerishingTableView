@@ -169,6 +169,9 @@
     // Configure the view for the selected state
 }
 
+
+/// 模型入口 并对数据进行赋值
+/// @param dic 元数据
 - (void)updateDataWithDic:(NSDictionary *)dic {
     ///原始数据备份, 便于排查问题
     _dict = dic;
@@ -195,6 +198,9 @@
     
 }
 
+
+/// 控制布局变化
+/// @param dic 元数据
 - (void)updateMasWithDic:(NSDictionary *)dic {
     
 //    NSString *imgName = dic[@"avatar"]?:@"";
