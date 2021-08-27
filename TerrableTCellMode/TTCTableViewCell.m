@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UILabel *topicLabel;
 @property (nonatomic, strong) UILabel *extLabel;
 
+@property (nonatomic, strong) NSDictionary *dict;
 //@property (nonatomic, strong) MASViewAttribute *offsetConstraint;
 //@property (nonatomic, weak) UIView *constraintBaseView
 
@@ -169,6 +170,9 @@
 }
 
 - (void)updateDataWithDic:(NSDictionary *)dic {
+    ///原始数据备份, 便于排查问题
+    _dict = dic;
+
     NSString *imgName = dic[@"avatar"]?:@"";
     NSString *title = dic[@"title"]?:@"";
     NSString *rightBtnTitle = dic[@"rightBtn"]?:@"";
@@ -182,7 +186,25 @@
     _titleLabel.text = title;
     _contentLabel.text = content;
     _dateLabel.text = date;
+    [_contentImagView setImage:[UIImage imageNamed:contentImg]];
+    _topicLabel.text = topic;
+    _extLabel.text = ext;
+    [_rightBtn setTitle:rightBtnTitle forState:UIControlStateNormal];
+
+    [self updateMasWithDic:dic];
     
+}
+
+- (void)updateMasWithDic:(NSDictionary *)dic {
+    
+//    NSString *imgName = dic[@"avatar"]?:@"";
+//    NSString *title = dic[@"title"]?:@"";
+    NSString *rightBtnTitle = dic[@"rightBtn"]?:@"";
+//    NSString *content = dic[@"content"]?:@"";
+    NSString *date = dic[@"date"]?:@"";
+    NSString *contentImg = dic[@"contentImg"]?:@"";
+    NSString *topic = dic[@"topic"]?:@"";
+    NSString *ext = dic[@"ext"]?:@"";
     
     if ([date length] > 0) {
         [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
@@ -195,12 +217,10 @@
     }
     
     if ([rightBtnTitle length] > 0) {
-        [_rightBtn setTitle:rightBtnTitle forState:UIControlStateNormal];
         [_rightBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@100);
         }];
     } else {
-        [_rightBtn setTitle:nil forState:UIControlStateNormal];
         [_rightBtn mas_updateConstraints:^(MASConstraintMaker *make) {
             make.width.equalTo(@0);
         }];
@@ -209,7 +229,6 @@
     UIView *constraintView = self.contentLabel;///基准视图
     
     if ([contentImg length] > 0) {
-        [_contentImagView setImage:[UIImage imageNamed:contentImg]];
         [_contentImagView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(constraintView.mas_bottom).offset(16);
             make.left.equalTo(@16);
@@ -218,14 +237,12 @@
         }];
         constraintView = _contentImagView;
     } else {
-        [_contentImagView setImage:nil];
         [_contentImagView mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.width.height.equalTo(@0);
         }];
     }
     
     if ([topic length] > 0) {
-        _topicLabel.text = topic;
         
         [_topicLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(constraintView.mas_bottom).offset(16);
@@ -235,18 +252,17 @@
         }];
         constraintView = _topicLabel;
     } else {
-        _topicLabel.text = nil;
         [_topicLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.height.equalTo(@0);
         }];
     }
     
     if ([ext length] > 0) {
-        _extLabel.text = ext;
-        [_extLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        [_extLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(constraintView.mas_bottom).offset(16);
             make.left.equalTo(@16);
             make.right.equalTo(@-16);
+            make.height.equalTo(@32);
             make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
         }];
         constraintView = _extLabel;
