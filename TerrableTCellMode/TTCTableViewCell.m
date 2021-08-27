@@ -20,6 +20,12 @@
 @property (nonatomic, strong) UIButton *rightBtn;
 @property (nonatomic, strong) UIView *titlePanel;
 
+@property (nonatomic, strong) UIImageView *contentImagView;
+@property (nonatomic, strong) UILabel *topicLabel;
+@property (nonatomic, strong) UILabel *extLabel;
+
+@property (nonatomic, strong) MASViewAttribute *offsetConstraint;
+
 @end
 
 @implementation TTCTableViewCell
@@ -78,6 +84,24 @@
         return btn;
     }();
     
+    _contentImagView = ^{
+        UIImageView *imgV = [[UIImageView alloc] init];
+        return imgV;
+    }();
+    
+    _topicLabel = ^{
+        UILabel *l = [[UILabel alloc] init];
+        l.backgroundColor = [UIColor orangeColor];
+        l.layer.cornerRadius = 5;
+        return l;
+    }();
+    
+    _extLabel = ^{
+        UILabel *l = [[UILabel alloc] init];
+        l.backgroundColor = [UIColor greenColor];
+        return l;
+    }();
+    
     [self.contentView addSubview:_panel];
     [self.panel addSubview:_avatar];
     [self.panel addSubview:_titlePanel];
@@ -85,6 +109,9 @@
     [self.titlePanel addSubview:_dateLabel];
     [self.panel addSubview:_contentLabel];
     [self.panel addSubview:_rightBtn];
+    [self.panel addSubview:_contentImagView];
+    [self.panel addSubview:_topicLabel];
+    [self.panel addSubview:_extLabel];
 }
 
 - (void)masSubviews {
@@ -145,10 +172,10 @@
     NSString *title = dic[@"title"]?:@"";
     NSString *rightBtnTitle = dic[@"rightBtn"]?:@"";
     NSString *content = dic[@"content"]?:@"";
+    NSString *date = dic[@"date"]?:@"";
     NSString *contentImg = dic[@"contentImg"]?:@"";
     NSString *topic = dic[@"topic"]?:@"";
     NSString *ext = dic[@"ext"]?:@"";
-    NSString *date = dic[@"date"]?:@"";
     
     [_avatar setImage:[UIImage imageNamed:imgName]];
     _titleLabel.text = title;
@@ -177,6 +204,34 @@
             make.width.equalTo(@0);
         }];
     }
+    
+    if ([contentImg length] > 0) {
+        [_contentImagView setImage:[UIImage imageNamed:contentImg]];
+        [_contentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@16);
+            make.top.equalTo(self.avatar.mas_bottom).offset(16);
+            make.right.equalTo(self.contentView).offset(-16);
+            make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
+        }];
+        
+        [_contentImagView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_contentLabel.mas_bottom).offset(16);
+            make.left.equalTo(@16);
+            make.width.height.equalTo(@200);
+            make.bottom.equalTo(self.panel).offset(-16);
+        }];
+        
+    } else {
+        [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.equalTo(@16);
+            make.top.equalTo(self.avatar.mas_bottom).offset(16);
+            make.right.equalTo(self.contentView).offset(-16);
+            make.bottom.equalTo(self.panel).offset(-16);
+        }];
+        
+        [_contentImagView setImage:nil];
+    }
+    
     
 }
 
