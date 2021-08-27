@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,8 @@
 		513C53A926D87F430083266D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 513C53A826D87F430083266D /* main.m */; };
 		513C53B326D87F430083266D /* TerrableTCellModeTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 513C53B226D87F430083266D /* TerrableTCellModeTests.m */; };
 		513C53BE26D87F430083266D /* TerrableTCellModeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 513C53BD26D87F430083266D /* TerrableTCellModeUITests.m */; };
+		513C53DA26D884C10083266D /* TTCViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 513C53D926D884C10083266D /* TTCViewModel.m */; };
+		513C53DF26D885B90083266D /* Avatar.png in Resources */ = {isa = PBXBuildFile; fileRef = 513C53DE26D885B90083266D /* Avatar.png */; };
 		CFD8118E40B860521F1BCB46 /* Pods_TerrableTCellModeTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 93B5E9A35E00A7C111EE283C /* Pods_TerrableTCellModeTests.framework */; };
 		E5A38F8A09683D86B31BB612 /* Pods_TerrableTCellMode.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 461099553653679E34EC55EB /* Pods_TerrableTCellMode.framework */; };
 /* End PBXBuildFile section */
@@ -60,6 +62,9 @@
 		513C53B926D87F430083266D /* TerrableTCellModeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TerrableTCellModeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		513C53BD26D87F430083266D /* TerrableTCellModeUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TerrableTCellModeUITests.m; sourceTree = "<group>"; };
 		513C53BF26D87F430083266D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		513C53D826D884C10083266D /* TTCViewModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TTCViewModel.h; sourceTree = "<group>"; };
+		513C53D926D884C10083266D /* TTCViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TTCViewModel.m; sourceTree = "<group>"; };
+		513C53DE26D885B90083266D /* Avatar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Avatar.png; sourceTree = "<group>"; };
 		712350A84E8BA2887D6B4437 /* Pods-TerrableTCellMode-TerrableTCellModeUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TerrableTCellMode-TerrableTCellModeUITests.release.xcconfig"; path = "Target Support Files/Pods-TerrableTCellMode-TerrableTCellModeUITests/Pods-TerrableTCellMode-TerrableTCellModeUITests.release.xcconfig"; sourceTree = "<group>"; };
 		93B5E9A35E00A7C111EE283C /* Pods_TerrableTCellModeTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TerrableTCellModeTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFCB69B16894E62371E72438 /* Pods-TerrableTCellMode.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TerrableTCellMode.debug.xcconfig"; path = "Target Support Files/Pods-TerrableTCellMode/Pods-TerrableTCellMode.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,6 +132,9 @@
 				513C539A26D87F400083266D /* SceneDelegate.m */,
 				513C539C26D87F400083266D /* ViewController.h */,
 				513C539D26D87F400083266D /* ViewController.m */,
+				513C53D826D884C10083266D /* TTCViewModel.h */,
+				513C53D926D884C10083266D /* TTCViewModel.m */,
+				513C53DE26D885B90083266D /* Avatar.png */,
 				513C539F26D87F400083266D /* Main.storyboard */,
 				513C53A226D87F430083266D /* Assets.xcassets */,
 				513C53A426D87F430083266D /* LaunchScreen.storyboard */,
@@ -174,7 +182,6 @@
 				C081979302268D908A9EE617 /* Pods-TerrableTCellModeTests.debug.xcconfig */,
 				06ED207781C2B77B6F0AE139 /* Pods-TerrableTCellModeTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -287,6 +294,7 @@
 			files = (
 				513C53A626D87F430083266D /* LaunchScreen.storyboard in Resources */,
 				513C53A326D87F430083266D /* Assets.xcassets in Resources */,
+				513C53DF26D885B90083266D /* Avatar.png in Resources */,
 				513C53A126D87F400083266D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -417,6 +425,7 @@
 			files = (
 				513C539E26D87F400083266D /* ViewController.m in Sources */,
 				513C539826D87F400083266D /* AppDelegate.m in Sources */,
+				513C53DA26D884C10083266D /* TTCViewModel.m in Sources */,
 				513C53A926D87F430083266D /* main.m in Sources */,
 				513C539B26D87F400083266D /* SceneDelegate.m in Sources */,
 			);

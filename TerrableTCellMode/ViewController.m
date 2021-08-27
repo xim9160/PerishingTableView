@@ -6,8 +6,11 @@
 //
 
 #import "ViewController.h"
+#import "TTCViewModel.h"
 
 @interface ViewController ()
+
+@property (nonatomic, strong) UITableView *mainTabelView;
 
 @end
 
