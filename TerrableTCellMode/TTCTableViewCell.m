@@ -24,7 +24,8 @@
 @property (nonatomic, strong) UILabel *topicLabel;
 @property (nonatomic, strong) UILabel *extLabel;
 
-@property (nonatomic, strong) MASViewAttribute *offsetConstraint;
+//@property (nonatomic, strong) MASViewAttribute *offsetConstraint;
+//@property (nonatomic, weak) UIView *constraintBaseView
 
 @end
 
@@ -158,7 +159,7 @@
         make.left.equalTo(@16);
         make.top.equalTo(self.avatar.mas_bottom).offset(16);
         make.right.equalTo(self.contentView).offset(-16);
-        make.bottom.equalTo(self.panel).offset(-16);
+        make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
     }];
 }
 
@@ -205,34 +206,55 @@
         }];
     }
     
+    UIView *constraintView = self.contentLabel;///基准视图
+    
     if ([contentImg length] > 0) {
         [_contentImagView setImage:[UIImage imageNamed:contentImg]];
-        [_contentLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@16);
-            make.top.equalTo(self.avatar.mas_bottom).offset(16);
-            make.right.equalTo(self.contentView).offset(-16);
-            make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
-        }];
-        
         [_contentImagView mas_remakeConstraints:^(MASConstraintMaker *make) {
-            make.top.equalTo(_contentLabel.mas_bottom).offset(16);
+            make.top.equalTo(constraintView.mas_bottom).offset(16);
             make.left.equalTo(@16);
             make.width.height.equalTo(@200);
-            make.bottom.equalTo(self.panel).offset(-16);
+            make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
         }];
-        
+        constraintView = _contentImagView;
     } else {
-        [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.left.equalTo(@16);
-            make.top.equalTo(self.avatar.mas_bottom).offset(16);
-            make.right.equalTo(self.contentView).offset(-16);
-            make.bottom.equalTo(self.panel).offset(-16);
-        }];
-        
         [_contentImagView setImage:nil];
+        [_contentImagView mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.width.height.equalTo(@0);
+        }];
     }
     
+    if ([topic length] > 0) {
+        _topicLabel.text = topic;
+        
+        [_topicLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(constraintView.mas_bottom).offset(16);
+            make.left.equalTo(@16);
+            make.right.equalTo(@-16);
+            make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
+        }];
+        constraintView = _topicLabel;
+    } else {
+        _topicLabel.text = nil;
+        [_topicLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@0);
+        }];
+    }
     
+    if ([ext length] > 0) {
+        _extLabel.text = ext;
+        [_extLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(constraintView.mas_bottom).offset(16);
+            make.left.equalTo(@16);
+            make.right.equalTo(@-16);
+            make.bottom.lessThanOrEqualTo(self.panel).offset(-16);
+        }];
+        constraintView = _extLabel;
+    } else {
+        [_extLabel mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.height.equalTo(@0);
+        }];
+    }
 }
 
 @end
