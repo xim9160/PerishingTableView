@@ -65,6 +65,7 @@
             },
             @{
                 @"title":@"我是标题",
+                @"date":@"2021-01-01",
                 @"avatar":@"Avatar",
                 @"rightBtn":@"关注",
                 @"content":@"我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文我是正文",
@@ -78,16 +79,15 @@
     return self;
 }
 
-
-
 - (NSArray *)nextPageData {
     self.index ++;
     if (self.index >= self.baseDataList.count) {
-        self.index = 0;;
+        self.index = 1;;
     } else {
         //donothing
     }
-    return self.baseDataList[self.index];
+    NSRange range = NSMakeRange(0, self.index);
+    return [self.baseDataList subarrayWithRange:range];
 }
 
 @end
