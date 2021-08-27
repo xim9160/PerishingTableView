@@ -16,6 +16,9 @@
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
 
+@property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UIView *titlePanel;
+
 @end
 
 @implementation TTCTableViewCell
@@ -57,9 +60,21 @@
         return l;
     }();
     
+    _dateLabel = ^{
+        UILabel *l = [[UILabel alloc] init];
+        return l;
+    }();
+    
+    _titlePanel = ^{
+        UILabel *l = [[UILabel alloc] init];
+        return l;
+    }();
+    
     [self.contentView addSubview:_panel];
     [self.panel addSubview:_avatar];
-    [self.panel addSubview:_titleLabel];
+    [self.panel addSubview:_titlePanel];
+    [self.titlePanel addSubview:_titleLabel];
+    [self.titlePanel addSubview:_dateLabel];
     [self.panel addSubview:_contentLabel];
     
 }
@@ -72,13 +87,29 @@
     
     [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@16);
-        make.top.equalTo(self.panel);
+        make.top.equalTo(self.panel).offset(16);
         make.height.width.equalTo(@32);
     }];
     
+    _titlePanel.backgroundColor = [UIColor redColor];
+
+    [_titlePanel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.centerY.equalTo(_avatar);
+        make.left.equalTo(_titleLabel);
+        make.right.greaterThanOrEqualTo(_titleLabel);
+        make.right.greaterThanOrEqualTo(_dateLabel);
+    }];
+    
+    
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_avatar.mas_right).offset(16);
-        make.centerY.equalTo(_avatar);
+        make.top.equalTo(_titlePanel);
+    }];
+    
+    [_dateLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.equalTo(_titleLabel);
+        make.top.equalTo(_titleLabel.mas_bottom).offset(0);
+        make.bottom.equalTo(_titlePanel);
     }];
     
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -107,6 +138,18 @@
     [_avatar setImage:[UIImage imageNamed:imgName]];
     _titleLabel.text = title;
     _contentLabel.text = content;
+    _dateLabel.text = date;
+    
+    if ([date length] > 0) {
+        [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_titleLabel.mas_bottom).offset(8);
+        }];
+    } else {
+        [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.top.equalTo(_titleLabel.mas_bottom).offset(0);
+        }];
+    }
+    
 }
 
 @end
