@@ -17,6 +17,7 @@
 @property (nonatomic, strong) UILabel *contentLabel;
 
 @property (nonatomic, strong) UILabel *dateLabel;
+@property (nonatomic, strong) UIButton *rightBtn;
 @property (nonatomic, strong) UIView *titlePanel;
 
 @end
@@ -70,13 +71,20 @@
         return l;
     }();
     
+    _rightBtn = ^{
+        UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+        btn.backgroundColor = [UIColor orangeColor];
+        btn.layer.cornerRadius = 12;
+        return btn;
+    }();
+    
     [self.contentView addSubview:_panel];
     [self.panel addSubview:_avatar];
     [self.panel addSubview:_titlePanel];
     [self.titlePanel addSubview:_titleLabel];
     [self.titlePanel addSubview:_dateLabel];
     [self.panel addSubview:_contentLabel];
-    
+    [self.panel addSubview:_rightBtn];
 }
 
 - (void)masSubviews {
@@ -98,8 +106,8 @@
         make.left.equalTo(_titleLabel);
         make.right.greaterThanOrEqualTo(_titleLabel);
         make.right.greaterThanOrEqualTo(_dateLabel);
+        make.right.lessThanOrEqualTo(_rightBtn.mas_left).offset(-16);
     }];
-    
     
     [_titleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(_avatar.mas_right).offset(16);
@@ -110,6 +118,13 @@
         make.left.equalTo(_titleLabel);
         make.top.equalTo(_titleLabel.mas_bottom).offset(0);
         make.bottom.equalTo(_titlePanel);
+    }];
+    
+    [_rightBtn mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.right.equalTo(_panel.mas_right).offset(-16);
+        make.centerY.equalTo(_avatar);
+        make.width.equalTo(@100);
+//        make.left.lessThanOrEqualTo(_titlePanel);
     }];
     
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
@@ -140,6 +155,7 @@
     _contentLabel.text = content;
     _dateLabel.text = date;
     
+    
     if ([date length] > 0) {
         [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_titleLabel.mas_bottom).offset(8);
@@ -147,6 +163,18 @@
     } else {
         [_dateLabel mas_updateConstraints:^(MASConstraintMaker *make) {
             make.top.equalTo(_titleLabel.mas_bottom).offset(0);
+        }];
+    }
+    
+    if ([rightBtnTitle length] > 0) {
+        [_rightBtn setTitle:rightBtnTitle forState:UIControlStateNormal];
+        [_rightBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@100);
+        }];
+    } else {
+        [_rightBtn setTitle:nil forState:UIControlStateNormal];
+        [_rightBtn mas_updateConstraints:^(MASConstraintMaker *make) {
+            make.width.equalTo(@0);
         }];
     }
     
