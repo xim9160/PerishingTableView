@@ -102,6 +102,7 @@
     NSString *contentImg = dic[@"contentImg"]?:@"";
     NSString *topic = dic[@"topic"]?:@"";
     NSString *ext = dic[@"ext"]?:@"";
+    NSString *date = dic[@"date"]?:@"";
     
     [_avatar setImage:[UIImage imageNamed:imgName]];
     _titleLabel.text = title;
