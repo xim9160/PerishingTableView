@@ -10,6 +10,8 @@
 
 @interface TTCTableViewCell()
 
+@property (nonatomic, strong) UIView *panel;
+
 @property (nonatomic, strong) UIImageView *avatar;
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *contentLabel;
@@ -33,6 +35,12 @@
 }
 
 - (void)initSubviews {
+    
+    _panel = ^{
+        UIView *v = [UIView new];
+        return v;
+    }();
+    
     _avatar = ^{
         UIImageView *imgV = [[UIImageView alloc] init];
         return imgV;
@@ -45,19 +53,26 @@
     
     _contentLabel = ^{
         UILabel *l = [[UILabel alloc] init];
+        l.numberOfLines = 0;
         return l;
     }();
     
-    [self.contentView addSubview:_avatar];
-    [self.contentView addSubview:_titleLabel];
-    [self.contentView addSubview:_contentLabel];
+    [self.contentView addSubview:_panel];
+    [self.panel addSubview:_avatar];
+    [self.panel addSubview:_titleLabel];
+    [self.panel addSubview:_contentLabel];
     
 }
 
 - (void)masSubviews {
+    
+    [self.panel mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.contentView);
+    }];
+    
     [_avatar mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@16);
-        make.top.equalTo(@16);
+        make.top.equalTo(self.panel);
         make.height.width.equalTo(@32);
     }];
     
@@ -69,6 +84,8 @@
     [_contentLabel mas_makeConstraints:^(MASConstraintMaker *make) {
         make.left.equalTo(@16);
         make.top.equalTo(self.avatar.mas_bottom).offset(16);
+        make.right.equalTo(self.contentView).offset(-16);
+        make.bottom.equalTo(self.panel).offset(-16);
     }];
 }
 

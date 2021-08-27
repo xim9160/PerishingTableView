@@ -45,6 +45,7 @@ static NSString *cellIdentifity = @"cellIdentifity";
     
     self.tableView = [[UITableView alloc]initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.view addSubview:self.tableView];
@@ -74,7 +75,7 @@ static NSString *cellIdentifity = @"cellIdentifity";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 100;
+    return UITableViewAutomaticDimension;
 }
 
 - (void)changeData {
